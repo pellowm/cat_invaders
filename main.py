@@ -3,6 +3,7 @@ import os
 import time
 import random
 pygame.font.init()
+pygame.mixer.init()
 
 WIDTH, HEIGHT = 750, 750
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -25,6 +26,9 @@ YELLOW_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_yellow.png"
 #background
 BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
 
+#sounds
+bark_sound = pygame.mixer.Sound("assets/short.wav")
+
 class Laser:
     def __init__(self, x, y, img):
         self.x = x
@@ -45,7 +49,7 @@ class Laser:
         return collide(obj, self)
 
 class Ship:
-    COOLDOWN = 30
+    COOLDOWN = 20
 
     def __init__(self, x, y, color, health=100):
         self.x = x
@@ -79,6 +83,7 @@ class Ship:
 
     def shoot(self):
         if self.cool_down_counter == 0:
+            bark_sound.play()
             laser = Laser(self.x, self.y, self.laser_img)
             self.lasers.append(laser)
             self.cool_down_counter = 1
@@ -102,11 +107,13 @@ class Player(Ship):
         self.cooldown()
         for laser in self.lasers:
             laser.move(vel)
+
             if laser.off_screen(HEIGHT):
                 self.lasers.remove(laser)
             else:
                 for obj in objs:
                     if laser.collision(obj):
+                        #angry meow here
                         objs.remove(obj)
                         self.lasers.remove(laser)
 
@@ -116,8 +123,6 @@ class Player(Ship):
 
     def healthbar(self, window):
         pygame.draw.rect(window, (255, 0, 0), (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width(), 10))
-        print(type(self.health))
-        print(self.max_health)
         pygame.draw.rect(window, (0, 255, 0), (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width() * (self.health / self.max_health), 10))
         #pygame.draw.rect(window, (0, 255, 0), (self.x, self.y + self.ship_img.get_height() + 10, self.ship_img.get_width() * (4 / 5), 10))
 
@@ -154,6 +159,7 @@ def main():
     lives = 3
     main_font = pygame.font.SysFont("comicsans", 50)
     lost_font = pygame.font.SysFont("comicsans", 60)
+
 
     enemies = []
     wave_length = 5
@@ -221,6 +227,7 @@ def main():
             player.x += player_vel
         if keys[pygame.K_SPACE]:
             player.shoot()
+
 
         for enemy in enemies:
             enemy.move(enemy_vel)
