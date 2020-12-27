@@ -10,9 +10,9 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cat Invaders")
 
 #load images
-RED_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_red_small.png"))
-GREEN_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_green_small.png"))
-BLUE_SPACE_SHIP = pygame.image.load(os.path.join("assets", "pixel_ship_blue_small.png"))
+RED_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_red.png"))
+GREEN_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_green.png"))
+BLUE_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_blue.png"))
 
 #player ship
 YELLOW_SPACE_SHIP = pygame.image.load(os.path.join("assets", "dobby.png"))
@@ -21,7 +21,7 @@ YELLOW_SPACE_SHIP = pygame.image.load(os.path.join("assets", "dobby.png"))
 RED_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_red.png"))
 GREEN_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_green.png"))
 BLUE_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
-YELLOW_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_yellow.png"))
+YELLOW_LASER = pygame.image.load(os.path.join("assets", "bark_laser_2.png"))
 
 #background
 BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
