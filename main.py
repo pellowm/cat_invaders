@@ -180,8 +180,8 @@ def main():
     def redraw_window():
         WIN.blit(BG, (0,0))
         #draw text
-        lives_label = main_font.render(f"Lives: {lives}", 1, (255, 0, 0))
-        level_label = main_font.render(f"Level: {level}", 1, (255, 0, 0))
+        lives_label = main_font.render(f"Lives: {lives}", 1, (255, 255, 255))
+        level_label = main_font.render(f"Level: {level}", 1, (255, 255, 255))
         
         WIN.blit(lives_label, (10, 10))
         WIN.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
@@ -299,19 +299,21 @@ def victory_screen():
 
 def instructions_screen():
     instructions_font = pygame.font.SysFont("comicsans", 35)
+    instructions_font_2 = pygame.font.SysFont("comicsans", 25)
 
     run = True
     while run:
         WIN.blit(BG, (0,0))
-        instructions_label_1 = instructions_font.render("Help Dobby scare away the cat invaders by barking ", 1, (255, 255, 255))
-        instructions_label_2 = instructions_font.render("with the space bar. Dodge their lasers with the ", 1, (255, 255, 255))
-        instructions_label_3 = instructions_font.render("left and right arrow keys. Try to hold down the ", 1, (255, 255, 255))
-        instructions_label_4 = instructions_font.render("fort for 5 rounds! Click to start your defense.", 1, (255, 255, 255))
-        
+        instructions_label_1 = instructions_font.render("Help Dobby scare away the cat invaders ", 1, (255, 255, 255))
+        instructions_label_2 = instructions_font.render("by barking with the space bar. ", 1, (255, 255, 255))
+        instructions_label_3 = instructions_font.render("Dodge their lasers with the arrow keys. ", 1, (255, 255, 255))
+        instructions_label_4 = instructions_font.render("Try to hold down the fort for 5 rounds!", 1, (255, 255, 255))
+        instructions_label_5 = instructions_font_2.render("Click to start your defense.", 1, (255, 255, 255))
         WIN.blit(instructions_label_1, (WIDTH/2 - instructions_label_1.get_width()/2, 250))
         WIN.blit(instructions_label_2, (WIDTH/2 - instructions_label_2.get_width()/2, 300))
         WIN.blit(instructions_label_3, (WIDTH/2 - instructions_label_3.get_width()/2, 350))
         WIN.blit(instructions_label_4, (WIDTH/2 - instructions_label_4.get_width()/2, 400))
+        WIN.blit(instructions_label_5, (WIDTH/2 - instructions_label_5.get_width()/2, 550))
         pygame.display.update()
 
         for event in pygame.event.get():
