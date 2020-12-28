@@ -31,6 +31,8 @@ BG = pygame.transform.scale(pygame.image.load(os.path.abspath(os.path.join(dirpa
 
 #sounds
 bark_sound = pygame.mixer.Sound(os.path.abspath(os.path.join(dirpath, "short.wav")))
+kitten_meow = pygame.mixer.Sound(os.path.abspath(os.path.join(dirpath, "kitten_meow.ogg")))
+cat_death = pygame.mixer.Sound(os.path.abspath(os.path.join(dirpath, "cat_death.wav")))
 
 class Laser:
     def __init__(self, x, y, img):
@@ -117,6 +119,10 @@ class Player(Ship):
                 for obj in objs:
                     if laser.collision(obj):
                         #angry meow here
+                        if obj.ship_img == BLUE_SPACE_SHIP:
+                            kitten_meow.play()
+                        if obj.ship_img == GREEN_SPACE_SHIP or obj.ship_img == RED_SPACE_SHIP :
+                            cat_death.play()
                         objs.remove(obj)
                         self.lasers.remove(laser)
 
