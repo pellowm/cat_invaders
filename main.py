@@ -9,25 +9,28 @@ WIDTH, HEIGHT = 750, 750
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Cat Invaders")
 
+dirpath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'assets'))
+print(dirpath)
+
 #load images
-RED_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_red.png"))
-GREEN_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_green.png"))
-BLUE_SPACE_SHIP = pygame.image.load(os.path.join("assets", "cat_blue.png"))
+RED_SPACE_SHIP = pygame.image.load(os.path.abspath(os.path.join(dirpath, "cat_red.png")))
+GREEN_SPACE_SHIP = pygame.image.load(os.path.abspath(os.path.join(dirpath, "cat_green.png")))
+BLUE_SPACE_SHIP = pygame.image.load(os.path.abspath(os.path.join(dirpath, "cat_blue.png")))
 
 #player ship
-YELLOW_SPACE_SHIP = pygame.image.load(os.path.join("assets", "dobby.png"))
+YELLOW_SPACE_SHIP = pygame.image.load(os.path.abspath(os.path.join(dirpath, "dobby.png")))
 
 #lasers
-RED_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_red.png"))
-GREEN_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_green.png"))
-BLUE_LASER = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
-YELLOW_LASER = pygame.image.load(os.path.join("assets", "bark_laser_2.png"))
+RED_LASER = pygame.image.load(os.path.abspath(os.path.join(dirpath, "pixel_laser_red.png")))
+GREEN_LASER = pygame.image.load(os.path.abspath(os.path.join(dirpath, "pixel_laser_green.png")))
+BLUE_LASER = pygame.image.load(os.path.abspath(os.path.join(dirpath, "pixel_laser_blue.png")))
+YELLOW_LASER = pygame.image.load(os.path.abspath(os.path.join(dirpath, "bark_laser_2.png")))
 
 #background
-BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")), (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load(os.path.abspath(os.path.join(dirpath, "background-black.png"))), (WIDTH, HEIGHT))
 
 #sounds
-bark_sound = pygame.mixer.Sound("assets/short.wav")
+bark_sound = pygame.mixer.Sound(os.path.abspath(os.path.join(dirpath, "short.wav")))
 
 class Laser:
     def __init__(self, x, y, img):
@@ -211,6 +214,9 @@ def main():
 
         if len(enemies) == 0:
             level += 1
+            if level >= 6:
+                victory_screen()
+                run = False
             wave_length += 5
             for i in range(wave_length):
                 enemy = Enemy(random.randrange(50, WIDTH - 100), random.randrange(-1500, -100), random.choice(["red", "blue", "green"]))
@@ -247,14 +253,65 @@ def main():
 
 def main_menu():
     title_font = pygame.font.SysFont("comicsans", 90)
-    instructions_font = pygame.font.SysFont("comicsans", 50)
+    instructions_font = pygame.font.SysFont("comicsans", 25)
     run = True
     while run:
         WIN.blit(BG, (0,0))
         title_label = title_font.render("CAT INVADERS", 1, (255, 255, 255))
         instructions_label = instructions_font.render("click to begin", 1, (255, 255, 255))
-        WIN.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
-        WIN.blit(instructions_label, (WIDTH/2 - instructions_label.get_width()/2, 450))
+        WIN.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 300))
+        WIN.blit(instructions_label, (WIDTH/2 - instructions_label.get_width()/2, 550))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                instructions_screen()
+    pygame.quit()
+            
+def victory_screen():
+    victory_font = pygame.font.SysFont("comicsans", 50)
+    victory_font_2 = pygame.font.SysFont("comicsans", 25)
+
+
+    run = True
+    while run:
+        WIN.blit(BG, (0,0))
+        victory_label_1 = victory_font.render("You win! Those darned cats are gone.", 1, (255, 255, 255))
+        victory_label_2 = victory_font.render("You can now rest easy in your castle.", 1, (255, 255, 255))
+        SLEEPY = pygame.image.load(os.path.abspath(os.path.join(dirpath, "sleepy.png")))
+        sleepy_small = pygame.transform.scale(SLEEPY, (400, 250))
+        victory_label_3 = victory_font_2.render("Click to play again", 1, (255, 255, 255))
+        
+        WIN.blit(victory_label_1, (WIDTH/2 - victory_label_1.get_width()/2, 150))
+        WIN.blit(sleepy_small, (WIDTH/2 - sleepy_small.get_width()/2, 200))
+        WIN.blit(victory_label_2, (WIDTH/2 - victory_label_2.get_width()/2, 475))
+        WIN.blit(victory_label_3, (WIDTH/2 - victory_label_3.get_width()/2, 600))
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                main_menu()
+    pygame.quit()
+
+def instructions_screen():
+    instructions_font = pygame.font.SysFont("comicsans", 35)
+
+    run = True
+    while run:
+        WIN.blit(BG, (0,0))
+        instructions_label_1 = instructions_font.render("Help Dobby scare away the cat invaders by barking ", 1, (255, 255, 255))
+        instructions_label_2 = instructions_font.render("with the space bar. Dodge their lasers with the ", 1, (255, 255, 255))
+        instructions_label_3 = instructions_font.render("left and right arrow keys. Try to hold down the ", 1, (255, 255, 255))
+        instructions_label_4 = instructions_font.render("fort for 5 rounds! Click to start your defense.", 1, (255, 255, 255))
+        
+        WIN.blit(instructions_label_1, (WIDTH/2 - instructions_label_1.get_width()/2, 250))
+        WIN.blit(instructions_label_2, (WIDTH/2 - instructions_label_2.get_width()/2, 300))
+        WIN.blit(instructions_label_3, (WIDTH/2 - instructions_label_3.get_width()/2, 350))
+        WIN.blit(instructions_label_4, (WIDTH/2 - instructions_label_4.get_width()/2, 400))
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -262,6 +319,5 @@ def main_menu():
                 run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 main()
-    pygame.quit()
-            
+
 main_menu()
