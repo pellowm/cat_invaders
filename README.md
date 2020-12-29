@@ -1,6 +1,6 @@
 # Cat Invaders
 
-This is a spaceship game inspired by my pet dog and her hatred for cats.
+This is a game inspired by my pet dog and her hatred for cats.
 
 ## Installation
 
