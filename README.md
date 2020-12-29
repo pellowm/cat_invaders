@@ -16,3 +16,4 @@ to run this program:
 ## Credits
 
 [pygame tutorial](https://youtu.be/Q-__8Xw9KTM)
+[sound effects](https://opengameart.org/)
