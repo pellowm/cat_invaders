@@ -16,4 +16,4 @@ to run this program:
     
 ## Credits
 
-https://youtu.be/Q-__8Xw9KTM
+(pygame tutorial) [https://youtu.be/Q-__8Xw9KTM]
